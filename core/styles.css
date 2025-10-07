@@ -27,7 +27,7 @@ body {
 
 /* Product Cards */
 .product-card {
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
     border-radius: 10px;
     overflow: hidden;
@@ -35,13 +35,40 @@ body {
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* Contenedor de imagen del producto */
+.product-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f0f0f0;
+    position: relative;
+}
+
+.product-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.05);
+}
+
+/* Imagen en modal */
+#modalProductImage img {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Old product-image styles (mantener para compatibilidad) */
 .product-image {
     width: 100%;
     height: 200px;
-    object-fit: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,17 +95,19 @@ body {
 /* Cart Badge */
 .cart-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -8px;
+    right: -8px;
     background: #dc3545;
     color: white;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 /* Order Status */
@@ -107,6 +136,7 @@ body {
     font-weight: bold;
     font-size: 0.8rem;
     z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 /* Buttons */
@@ -149,6 +179,22 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Card body spacing */
+.product-card .card-body {
+    padding: 1.25rem;
+}
+
+.product-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    min-height: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .welcome-hero {
@@ -157,6 +203,10 @@ body {
     
     .welcome-hero h1 {
         font-size: 2rem;
+    }
+    
+    .product-image-container {
+        height: 180px;
     }
     
     .product-image {

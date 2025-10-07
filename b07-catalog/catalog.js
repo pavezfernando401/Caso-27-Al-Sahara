@@ -68,6 +68,17 @@ class CartManager {
 
 // ProductDetailManager
 class ProductDetailManager {
+    static getCategoryIcon(category) {
+        const iconMap = {
+            'Shawarma': 'fa-drumstick-bite',
+            'Falafel': 'fa-cookie-bite',
+            'Kebab': 'fa-hotdog',
+            'Salsa': 'fa-bottle-droplet',
+            'Bebida': 'fa-glass-water'
+        };
+        return iconMap[category] || 'fa-utensils';
+    }
+
     static showProductDetail(productId) {
         const products = StorageManager.getProducts();
         const product = products.find(p => p.id === productId);
@@ -75,12 +86,11 @@ class ProductDetailManager {
         if (!product) return;
 
         const modal = new bootstrap.Modal(document.getElementById('productModal'));
-        const categoryClass = `category-${product.category.toLowerCase()}`;
 
         document.getElementById('modalProductName').textContent = product.name;
         document.getElementById('modalProductPrice').textContent = formatPrice(product.price);
-        document.getElementById('modalProductImage').className = `product-image ${categoryClass} ${!product.available ? 'opacity-50' : ''}`;
-        document.getElementById('modalProductImage').innerHTML = '<i class="fas fa-utensils"></i>';
+        document.getElementById('modalProductImage').className = `${!product.available ? 'opacity-50' : ''}`;
+        document.getElementById('modalProductImage').innerHTML = `<img src="${product.image}" alt="${product.name}" class="w-100 rounded" style="max-height: 300px; object-fit: cover;">`;
         
         const ingredientsList = document.getElementById('modalProductIngredients');
         ingredientsList.innerHTML = product.ingredients.map(ing => `<li>${ing}</li>`).join('');
@@ -170,6 +180,17 @@ class CatalogManager {
         this.itemsPerPage = 12;
     }
 
+    getCategoryIcon(category) {
+        const iconMap = {
+            'Shawarma': 'fa-drumstick-bite',
+            'Falafel': 'fa-cookie-bite',
+            'Kebab': 'fa-hotdog',
+            'Salsa': 'fa-bottle-droplet',
+            'Bebida': 'fa-glass-water'
+        };
+        return iconMap[category] || 'fa-utensils';
+    }
+
     getFilteredProducts() {
         let products = StorageManager.getProducts();
 
@@ -219,7 +240,6 @@ class CatalogManager {
     }
 
     renderProductCard(product, isFeatured = false) {
-        const categoryClass = `category-${product.category.toLowerCase()}`;
         const featuredBadge = product.tags && (product.tags.includes('2x1') || product.tags.includes('Promoción')) ? 
             `<span class="featured-badge">${product.tags.find(t => t === '2x1' || t === 'Promoción')}</span>` : '';
 
@@ -232,9 +252,7 @@ class CatalogManager {
                 <div class="card product-card h-100 ${!product.available ? 'border-warning' : ''}" onclick="ProductDetailManager.showProductDetail(${product.id})">
                     ${featuredBadge}
                     ${!product.available ? '<span class="featured-badge bg-warning text-dark">Agotado</span>' : ''}
-                    <div class="product-image ${categoryClass} ${!product.available ? 'opacity-50' : ''}">
-                        <i class="fas fa-utensils"></i>
-                    </div>
+                    <img src="${product.image}" alt="${product.name}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text text-muted small">${product.category}</p>
