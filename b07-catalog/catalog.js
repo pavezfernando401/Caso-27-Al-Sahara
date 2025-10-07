@@ -241,7 +241,7 @@ class CatalogManager {
 
     renderProductCard(product, isFeatured = false) {
         const featuredBadge = product.tags && (product.tags.includes('2x1') || product.tags.includes('Promoción')) ? 
-            `<span class="featured-badge">${product.tags.find(t => t === '2x1' || t === 'Promoción')}</span>` : '';
+            `<span style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 10px 15px; border-radius: 8px; font-weight: 900; font-size: 0.9rem; z-index: 10; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.6); text-transform: uppercase; letter-spacing: 1px; border: 2px solid white;">${product.tags.find(t => t === '2x1' || t === 'Promoción')}</span>` : '';
 
         const user = AuthManager.checkSession();
         const canManageProducts = user && (user.role === 'admin' || user.role === 'cashier');
@@ -249,9 +249,9 @@ class CatalogManager {
 
         return `
             <div class="col-md-${isFeatured ? '6' : '3'} col-sm-6 mb-4">
-                <div class="card product-card h-100 ${!product.available ? 'border-warning' : ''}" onclick="ProductDetailManager.showProductDetail(${product.id})">
+                <div class="card product-card h-100 ${!product.available ? 'border-warning' : ''}" onclick="ProductDetailManager.showProductDetail(${product.id})" style="position: relative;">
                     ${featuredBadge}
-                    ${!product.available ? '<span class="featured-badge bg-warning text-dark">Agotado</span>' : ''}
+                    ${!product.available ? '<span style="position: absolute; top: 10px; right: 10px; background: #fbbf24; color: black; padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; z-index: 10; box-shadow: 0 3px 8px rgba(0,0,0,0.3);">Agotado</span>' : ''}
                     <img src="${product.image}" alt="${product.name}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>

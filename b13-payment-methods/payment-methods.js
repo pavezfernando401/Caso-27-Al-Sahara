@@ -96,20 +96,28 @@ class AuthManager {
     }
 }
 
-// Verificar autenticación y carrito
-const user = requireAuth(['customer']);
-if (!user) {
-    window.location.href = '../b02-login/login.html';
-}
+// Verificación de autenticación y carrito
+window.addEventListener('DOMContentLoaded', () => {
+    const user = requireAuth(['customer']);
+    if (!user) {
+        window.location.href = '../b02-login/login.html';
+        return;
+    }
 
-if (CartManager.isEmpty()) {
-    alert('Tu carrito está vacío');
-    window.location.href = '../b04-cart/cart.html';
-}
+    if (CartManager.isEmpty()) {
+        alert('Tu carrito está vacío');
+        window.location.href = '../b04-cart/cart.html';
+        return;
+    }
+
+    renderCheckoutSummary();
+    setupEventListeners();
+});
 
 function renderCheckoutSummary() {
     const cartItems = CartManager.getCartItems();
     const { subtotal, tax, total } = CartManager.getCartTotal();
+    const user = AuthManager.checkSession();
 
     const summary = document.getElementById('checkoutSummary');
     summary.innerHTML = `
@@ -133,17 +141,22 @@ function renderCheckoutSummary() {
     `;
 }
 
-// Actualizar estimación de entrega según tipo
-document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-        const estimate = document.getElementById('deliveryEstimate');
-        if (this.value === 'Retiro en tienda') {
-            estimate.innerHTML = '<i class="fas fa-clock"></i> <strong>Tiempo estimado:</strong> 15 minutos';
-        } else {
-            estimate.innerHTML = '<i class="fas fa-clock"></i> <strong>Entrega estimada:</strong> 35 minutos';
-        }
+function setupEventListeners() {
+    // Actualizar estimación de entrega según tipo
+    document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const estimate = document.getElementById('deliveryEstimate');
+            if (this.value === 'Retiro en tienda') {
+                estimate.innerHTML = '<i class="fas fa-clock"></i> <strong>Tiempo estimado:</strong> 15 minutos';
+            } else {
+                estimate.innerHTML = '<i class="fas fa-clock"></i> <strong>Entrega estimada:</strong> 35 minutos';
+            }
+        });
     });
-});
+
+    // Botón de confirmar pedido
+    document.getElementById('confirmOrderBtn').addEventListener('click', processPayment);
+}
 
 function processPayment() {
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
@@ -158,6 +171,20 @@ function processPayment() {
             setTimeout(() => {
                 if (typeof PaymentConfirmationManager !== 'undefined') {
                     PaymentConfirmationManager.confirmPayment(order);
+                } else {
+                    // Si no está disponible PaymentConfirmationManager, redirigir manualmente
+                    const orders = StorageManager.getOrders();
+                    const orderIndex = orders.findIndex(o => o.id === order.id);
+                    if (orderIndex !== -1) {
+                        orders[orderIndex].paymentStatus = 'Pagado';
+                        orders[orderIndex].orderStatus = 'En preparación';
+                        StorageManager.saveOrders(orders);
+                    }
+                    
+                    showToast('¡Pago exitoso!', 'success');
+                    setTimeout(() => {
+                        window.location.href = '../b06-tracking/orders.html';
+                    }, 1500);
                 }
             }, 2000);
             
@@ -165,12 +192,21 @@ function processPayment() {
             showToast('Pedido creado. Sube tu comprobante de transferencia', 'info');
             if (typeof PaymentConfirmationManager !== 'undefined') {
                 PaymentConfirmationManager.showTransferInstructions(order);
+            } else {
+                alert(`Pedido ${order.orderNumber} creado.\n\nDatos de transferencia:\nBanco: Banco Chile\nCuenta: 121274455\nRUT: 12.123.234-0\nMonto: ${formatPrice(order.total)}`);
+                setTimeout(() => {
+                    window.location.href = '../b06-tracking/orders.html';
+                }, 2000);
             }
             
         } else {
             showToast('Pedido confirmado. Pago en efectivo a la entrega', 'success');
             if (typeof PaymentConfirmationManager !== 'undefined') {
                 PaymentConfirmationManager.showSuccess(order);
+            } else {
+                setTimeout(() => {
+                    window.location.href = '../b06-tracking/orders.html';
+                }, 1500);
             }
         }
         
@@ -178,7 +214,3 @@ function processPayment() {
         showToast(error.message, 'error');
     }
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-    renderCheckoutSummary();
-});

@@ -59,6 +59,17 @@ function getOrderStatusClass(status) {
     return classes[status] || 'status-pendiente';
 }
 
+// Función global de logout
+function handleLogout() {
+    if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+        StorageManager.saveSession({ currentUser: null, lastActivity: null });
+        showToast('Sesión cerrada exitosamente', 'info');
+        setTimeout(() => {
+            window.location.href = '../index.html';
+        }, 500);
+    }
+}
+
 // Actualizar navbar según usuario logueado
 function updateNavbar() {
     const navMenu = document.getElementById('navMenu');
@@ -78,10 +89,10 @@ function updateNavbar() {
 
         if (user.role === 'customer') {
             menuItems += `
-                <li class="nav-item position-relative">
-                    <a class="nav-link" href="../b04-cart/cart.html">
+                <li class="nav-item" style="position: relative;">
+                    <a class="nav-link" href="../b04-cart/cart.html" style="position: relative; display: inline-block;">
                         <i class="fas fa-shopping-cart"></i> Carrito
-                        <span class="cart-badge" id="cartBadge">0</span>
+                        <span class="cart-badge" id="cartBadge" style="position: absolute; top: -8px; right: -12px; background: #dc3545; color: white; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; padding: 2px 4px; box-shadow: 0 2px 6px rgba(220, 53, 69, 0.5); line-height: 1;">0</span>
                     </a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="../b06-tracking/orders.html">Mis Pedidos</a></li>
@@ -114,7 +125,7 @@ function updateNavbar() {
                 <ul class="dropdown-menu">
                     ${user.role === 'customer' ? '<li><a class="dropdown-item" href="../b09-profile/profile.html"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>' : ''}
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#" onclick="AuthManager.logout()">
+                    <li><a class="dropdown-item" href="#" onclick="handleLogout(); return false;">
                         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </a></li>
                 </ul>
@@ -158,7 +169,7 @@ function resetInactivityTimer() {
     if (user) {
         inactivityTimer = setTimeout(() => {
             alert('Tu sesión ha expirado por inactividad');
-            AuthManager.logout();
+            handleLogout();
         }, 30 * 60 * 1000);
     }
 }
