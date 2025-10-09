@@ -1,6 +1,4 @@
-// ==================== B-08: CIERRE DE SESIÓN ====================
-// Este módulo no tiene HTML propio, solo exporta la función de logout
-
+// Este módulo solo exporta la función logout
 class LogoutManager {
     static logout() {
         if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
@@ -15,7 +13,6 @@ class LogoutManager {
     }
 }
 
-// Hacer disponible globalmente si se necesita
 if (typeof window !== 'undefined') {
     window.LogoutManager = LogoutManager;
 }

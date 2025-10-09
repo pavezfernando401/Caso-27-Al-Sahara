@@ -1,5 +1,3 @@
-// ==================== B-06: RASTREO DE PEDIDOS ====================
-
 class OrderTracker {
     static getUserOrders() {
         const user = AuthManager.checkSession();

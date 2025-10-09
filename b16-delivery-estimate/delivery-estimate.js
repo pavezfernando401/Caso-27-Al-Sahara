@@ -1,5 +1,3 @@
-// ==================== B-16: ESTIMACIÓN DE ENTREGA ====================
-
 class DeliveryEstimateManager {
     static calculateEstimate(deliveryType) {
         if (deliveryType === 'Retiro en tienda') {

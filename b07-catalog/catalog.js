@@ -1,6 +1,4 @@
-// ==================== B-07: VISUALIZACIÓN DE CATÁLOGO ====================
-
-// AuthManager mínimo
+// AuthManager
 class AuthManager {
     static checkSession() {
         const session = StorageManager.getSession();
@@ -15,7 +13,7 @@ class AuthManager {
     }
 }
 
-// CartManager mínimo
+// CartManager
 class CartManager {
     static addToCart(productId, quantity = 1) {
         const user = AuthManager.checkSession();

@@ -1,5 +1,3 @@
-// ==================== B-21: REGISTRO POR ADMINISTRADOR ====================
-
 class AdminRegisterManager {
     static registerCustomer(customerData) {
         const users = StorageManager.getUsers();

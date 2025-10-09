@@ -1,5 +1,3 @@
-// ==================== B-05: ÓRDENES DE DESPACHO ====================
-
 class DispatchManager {
     static getDispatchQueue() {
         const orders = StorageManager.getOrders();
@@ -177,7 +175,6 @@ function markDelivered(orderId) {
     }
 }
 
-// CORRECCIÓN: Verificación de permisos DENTRO del DOMContentLoaded
 window.addEventListener('DOMContentLoaded', () => {
     const currentUser = AuthManager.checkSession();
     
@@ -192,8 +189,6 @@ window.addEventListener('DOMContentLoaded', () => {
         window.location.href = '../index.html';
         return;
     }
-    
-    // Solo si pasa la verificación, renderizar
     renderDispatch();
     setInterval(renderDispatch, 30000);
 });

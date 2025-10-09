@@ -1,5 +1,3 @@
-// ==================== B-22: REPORTES DE VENTAS ====================
-
 class ReportsManager {
     static generateSalesReport(startDate, endDate) {
         const orders = StorageManager.getOrders();

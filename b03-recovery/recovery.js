@@ -1,5 +1,3 @@
-// ==================== B-03: RECUPERACIÓN DE CONTRASEÑA ====================
-
 class PasswordRecovery {
     static requestPasswordReset(email) {
         const users = StorageManager.getUsers();

@@ -1,5 +1,3 @@
-// ==================== B-18: CANCELACIÓN DE PEDIDO ====================
-
 class CancellationManager {
     static cancelOrder(orderId, reason) {
         const orders = StorageManager.getOrders();

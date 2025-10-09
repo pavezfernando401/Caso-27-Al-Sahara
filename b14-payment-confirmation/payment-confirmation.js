@@ -1,5 +1,3 @@
-// ==================== B-14: CONFIRMACIÓN DE PAGO ====================
-
 class PaymentConfirmationManager {
     static confirmPayment(order) {
         const orders = StorageManager.getOrders();

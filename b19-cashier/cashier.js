@@ -1,5 +1,3 @@
-// ==================== B-19: PROCESAR VENTAS (CAJERO VIRTUAL) ====================
-
 class CashierManager {
     static getCashierOrders(filter) {
         const orders = StorageManager.getOrders();

@@ -1,6 +1,3 @@
-// ==================== UTILIDADES GLOBALES ====================
-// Funciones reutilizables en toda la aplicación
-
 // Mostrar notificaciones toast
 function showToast(message, type = 'info') {
     const container = document.querySelector('.toast-container');

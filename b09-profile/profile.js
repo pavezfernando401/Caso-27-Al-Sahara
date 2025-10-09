@@ -1,5 +1,3 @@
-// ==================== B-09: ACTUALIZACIÓN DE PERFIL ====================
-
 class ProfileManager {
     static updateProfile(userData) {
         const user = AuthManager.checkSession();

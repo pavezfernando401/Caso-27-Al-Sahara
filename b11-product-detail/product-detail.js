@@ -1,6 +1,4 @@
-// ==================== B-11: DETALLE DE PRODUCTO ====================
-// Este módulo maneja el modal de detalle de productos
-
+// Este módulo maneja el detalle de productos
 class ProductDetailManager {
     static showProductDetail(productId) {
         const products = StorageManager.getProducts();

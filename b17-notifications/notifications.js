@@ -1,5 +1,3 @@
-// ==================== B-17: NOTIFICACIONES DE ESTADO ====================
-
 class NotificationManager {
     static registerNotification(order, status) {
         if (!order.notifications) {

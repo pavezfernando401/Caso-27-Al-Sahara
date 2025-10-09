@@ -1,5 +1,4 @@
-// ==================== B-15: BOLETA DIGITAL AUTOMÁTICA ====================
-
+// Esto muestra una supuesta implementación de generación y descarga de boletas digitales
 class ReceiptManager {
     static generateReceipt(orderId) {
         const orders = StorageManager.getOrders();

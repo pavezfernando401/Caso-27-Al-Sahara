@@ -1,5 +1,4 @@
-// ==================== B-12: PRODUCTOS DESTACADOS ====================
-
+//Este modulo maneja el muestreo de protuctos destacados
 class FeaturedManager {
     static getFeaturedProducts() {
         const products = StorageManager.getProducts();

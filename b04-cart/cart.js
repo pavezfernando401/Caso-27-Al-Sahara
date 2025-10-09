@@ -1,5 +1,3 @@
-// ==================== B-04: CARRITO DE COMPRAS ====================
-
 class CartManager {
     static addToCart(productId, quantity = 1) {
         const user = AuthManager.checkSession();

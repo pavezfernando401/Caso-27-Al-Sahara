@@ -1,5 +1,3 @@
-// ==================== B-13: MÉTODOS DE PAGO MÚLTIPLES ====================
-
 class PaymentMethodsManager {
     static createOrder(paymentMethod, deliveryType) {
         const user = AuthManager.checkSession();

@@ -1,5 +1,3 @@
-// ==================== B-01: REGISTRO DE USUARIO ====================
-
 class AuthManager {
     static validatePassword(password) {
         const hasMinLength = password.length >= 8;

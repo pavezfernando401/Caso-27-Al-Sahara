@@ -1,5 +1,3 @@
-// ==================== B-20: REGISTRO COMPLETO DE CLIENTES ====================
-
 class FullRegistrationManager {
     static validateRUT(rut) {
         const rutPattern = /^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$/;

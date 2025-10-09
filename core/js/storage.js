@@ -1,10 +1,6 @@
-// ==================== STORAGE MANAGER ====================
-// Maneja toda la persistencia de datos en localStorage
-
 class StorageManager {
-    // Inicializa datos por defecto si no existen
     static init() {
-        // Usuarios predefinidos - siempre verificar y crear si no existen
+        // Usuarios predefinidos con diferentes roles
         if (!localStorage.getItem('users')) {
             const defaultUsers = [
                 {
@@ -44,7 +40,7 @@ class StorageManager {
             localStorage.setItem('users', JSON.stringify(defaultUsers));
         }
 
-        // Productos predefinidos con imágenes reales
+        // Productos predefinidos con imágenes random 
         if (!localStorage.getItem('products')) {
             const products = [
                 // Shawarmas (5)

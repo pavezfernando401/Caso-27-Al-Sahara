@@ -1,5 +1,3 @@
-// ==================== B-02: INICIO DE SESIÓN ====================
-
 class AuthManager {
     static login(email, password) {
         const users = StorageManager.getUsers();
