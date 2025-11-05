@@ -22,7 +22,6 @@ const getUser = async (token) => {
         const user = await User.findById(decoded.id).select('-password');
         return user;
     } catch (error) {
-        console.error('Error verifying token:', error.message);
         return null; // Token inválido o expirado
     }
 };
